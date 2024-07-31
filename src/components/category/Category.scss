@@ -1,0 +1,35 @@
+.Category {
+  width: 32%;
+  background-image: url("../../assets//poster.jpeg");
+  aspect-ratio: 16/9;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+
+  .category-content {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: 0.2s ease;
+
+    .heading {
+      color: white;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .Category {
+    width: 48%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .Category {
+    width: 100%;
+  }
+}
