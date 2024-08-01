@@ -5,12 +5,15 @@
     display: flex;
 
     .product-img {
-      max-width: 600px;
-      min-width: 400px;
-      height: 600px;
+      // max-width: 600px;
+      // min-width: 400px;
+      // height: 600px;
+      flex: 2;
 
       img {
         width: 100%;
+        height: 100%;
+        object-fit: contain;
         transform: scale(0.9);
       }
     }
@@ -19,6 +22,7 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+      flex: 3;
 
       .price {
         color: var(--primary-text-color);
@@ -27,6 +31,7 @@
 
       .description {
         color: var(--secondary-text-color);
+        text-align: justify;
       }
 
       .cart-option {
@@ -78,6 +83,40 @@
           li {
             margin-top: 8px;
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ProductDetail {
+    margin-top: 20px;
+    .product-layout {
+      flex-direction: column;
+    }
+  }
+}
+
+@media screen and (orientation: landscape) {
+  .ProductDetail {
+    margin-top: 20px;
+    .product-layout {
+      flex-direction: row;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .ProductDetail {
+    margin-top: 20px;
+    .product-layout {
+      .product-info {
+        .title {
+          font-size: 1.5rem;
+        }
+        .price {
+          font-size: 1rem;
         }
       }
     }
