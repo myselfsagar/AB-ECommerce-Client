@@ -1,27 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dummyImg from "../../assets/naruto.jpeg";
 import "./ProductDetail.scss";
+import { useNavigate, useParams } from "react-router-dom";
+import { axiosClient } from "../../utils/axiosClient";
+import Loader from "../../components/loader/Loader";
 
 function ProductDetail() {
+  const params = useParams();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
   const [cartNumber, setCartNumber] = useState(0);
+
+  async function fetchData() {
+    const productResponse = await axiosClient.get(
+      `/products?filters[key][$eq]=${params.productId}&populate=image`
+    );
+    if (productResponse.data.data.length > 0) {
+      setProduct(productResponse.data.data[0]);
+    }
+  }
+
+  useEffect(() => {
+    setProduct(null);
+    fetchData();
+  }, [params]);
+
+  if (!product) {
+    return <Loader />;
+  }
 
   return (
     <div className="ProductDetail">
       <div className="container productDetail-container">
         <div className="product-layout">
           <div className="product-img center">
-            <img src={dummyImg} alt="product img" />
+            <img
+              src={product?.attributes.image?.data.attributes.url}
+              alt="product img"
+            />
           </div>
 
           <div className="product-info">
-            <h1 className="title">This is the Title, Wall poster</h1>
-            <h3 className="price">₹ 549</h3>
-            <p className="description">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi
-              impedit laborum, aut soluta labore beatae recusandae molestiae
-              molestias at incidunt iste excepturi quod eveniet perferendis nam
-              tempora repellat veritatis maxime?
-            </p>
+            <h1 className="title">{product?.attributes.title}</h1>
+            <h3 className="price">₹ {product?.attributes.price}</h3>
+            <p className="description">{product?.attributes.desc}</p>
             <div className="cart-option">
               <div className="quantity-selector center">
                 <span

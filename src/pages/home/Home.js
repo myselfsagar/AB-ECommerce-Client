@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../../components/hero/Hero";
 import "./Home.scss";
 import Category from "../../components/category/Category";
 import Product from "../../components/product/Product";
+import { axiosClient } from "../../utils/axiosClient";
 
 function Home() {
+  const [categories, setCategories] = useState(null);
+  const [topProducts, setTopProducts] = useState(null);
+
+  async function fetchData() {
+    const categoryResponse = await axiosClient.get(
+      "/categories?populate=image"
+    );
+    const topProductResponse = await axiosClient.get(
+      "/products?filters[isTopPick][$eq]=true&populate=image"
+    );
+
+    setCategories(categoryResponse.data.data);
+    setTopProducts(topProductResponse.data.data);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
       <Hero />
@@ -18,10 +38,9 @@ function Home() {
         </div>
 
         <div className="content">
-          <Category />
-          <Category />
-          <Category />
-          <Category />
+          {categories?.map((category) => (
+            <Category key={category.id} category={category} />
+          ))}
         </div>
       </section>
 
@@ -32,11 +51,9 @@ function Home() {
         </div>
 
         <div className="content">
-          <Product />
-          <Product />
-          <Product />
-          <Product />
-          <Product />
+          {topProducts?.map((topProduct) => (
+            <Product key={topProduct.id} product={topProduct} />
+          ))}
         </div>
       </section>
     </div>
