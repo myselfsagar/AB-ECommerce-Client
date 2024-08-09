@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { IoCartOutline } from "react-icons/io5";
 import "./Navbar.scss";
 import Cart from "../cart/Cart";
+import { useSelector } from "react-redux";
 
 function Navbar() {
+  const categories = useSelector((state) => state.categoryReducer.categories);
   const [openCart, setOpenCart] = useState(false);
 
   return (
@@ -13,21 +15,16 @@ function Navbar() {
         <div className="container nav-container">
           <div className="nav-left center">
             <ul className="link-group">
-              <li className="hover-link">
-                <Link className="link" to={"/products?category=comic"}>
-                  Comics
-                </Link>{" "}
-              </li>
-              <li className="hover-link">
-                <Link className="link" to={"/products?category=tvshow"}>
-                  TV shows
-                </Link>
-              </li>
-              <li className="hover-link">
-                <Link className="link" to={"/products?category=sports"}>
-                  Sports
-                </Link>
-              </li>
+              {categories?.map((category) => (
+                <li className="hover-link" key={category.id}>
+                  <Link
+                    className="link"
+                    to={`/category/${category.attributes.key}`}
+                  >
+                    {category.attributes.title}
+                  </Link>{" "}
+                </li>
+              ))}
             </ul>
           </div>
           <div className="nav-center">

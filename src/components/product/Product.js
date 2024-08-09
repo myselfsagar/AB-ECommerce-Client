@@ -16,17 +16,17 @@ function Product({ product }) {
         <div className="product-img" onClick={goToProductDetail}>
           <div className="img-container">
             <img
-              src={product?.attributes.image?.data.attributes.url}
-              alt={product?.attributes.title}
+              src={product?.attributes?.image?.data?.attributes?.url}
+              alt={product?.attributes?.title}
             />
           </div>
         </div>
 
         <div className="product-info">
           <p className="title" onClick={goToProductDetail}>
-            {product?.attributes.title}
+            {product?.attributes?.title}
           </p>
-          <p className="price">₹ {product?.attributes.price}</p>
+          <p className="price">₹ {product?.attributes?.price}</p>
         </div>
       </div>
     </div>

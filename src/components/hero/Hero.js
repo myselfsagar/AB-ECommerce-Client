@@ -13,7 +13,7 @@ function Hero() {
           Exclusive Art Pieces, for the Exclusive You.
         </p>
         <button
-          onClick={() => navigate("/category")}
+          onClick={() => navigate("/category/tv-shows")}
           className="btn-primary hero-btn"
         >
           Explore more
