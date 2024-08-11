@@ -7,7 +7,11 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
   const categories = useSelector((state) => state.categoryReducer.categories);
+  const cart = useSelector((state) => state.cartReducer.cart);
   const [openCart, setOpenCart] = useState(false);
+
+  let totalItem = 0;
+  cart.forEach((item) => (totalItem += item.quantity));
 
   return (
     <>
@@ -35,7 +39,9 @@ function Navbar() {
           <div className="nav-right hover-link">
             <div className="nav-cart" onClick={() => setOpenCart(!openCart)}>
               <IoCartOutline className="cart-icon" />
-              <span className="cart-count center">9</span>
+              {totalItem > 0 && (
+                <span className="cart-count center">{totalItem}</span>
+              )}
             </div>
           </div>
         </div>

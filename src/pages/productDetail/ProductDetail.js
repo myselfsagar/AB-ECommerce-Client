@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import dummyImg from "../../assets/naruto.jpeg";
 import "./ProductDetail.scss";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { axiosClient } from "../../utils/axiosClient";
 import Loader from "../../components/loader/Loader";
+import { addToCart, removeFromCart } from "../redux/slices/cartSlice";
 
 function ProductDetail() {
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
-  const [cartNumber, setCartNumber] = useState(0);
+  const cart = useSelector((state) => state.cartReducer.cart);
+  const quantity =
+    cart.find((item) => item.key === params.productId)?.quantity || 0;
 
   async function fetchData() {
     const productResponse = await axiosClient.get(
@@ -48,22 +53,25 @@ function ProductDetail() {
               <div className="quantity-selector center">
                 <span
                   className="btn decrement"
-                  onClick={() => {
-                    cartNumber > 0 && setCartNumber(cartNumber - 1);
-                  }}
+                  onClick={() => dispatch(removeFromCart(product))}
                 >
                   -
                 </span>
-                <span className="quantity">{cartNumber}</span>
+                <span className="quantity">{quantity}</span>
                 <span
                   className="btn increment"
-                  onClick={() => setCartNumber(cartNumber + 1)}
+                  onClick={() => dispatch(addToCart(product))}
                 >
                   +
                 </span>
               </div>
 
-              <button className="add-to-cart btn-primary">ADD TO CART</button>
+              <button
+                className="add-to-cart btn-primary"
+                onClick={() => dispatch(addToCart(product))}
+              >
+                ADD TO CART
+              </button>
             </div>
             <div className="return-policy">
               <ul>

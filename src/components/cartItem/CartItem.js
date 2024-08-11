@@ -1,44 +1,49 @@
-import React, { useState } from "react";
-import dummyImg from "../../assets/naruto.jpeg";
+import React from "react";
 import { IoClose } from "react-icons/io5";
 
 import "./CartItem.scss";
+import { useDispatch } from "react-redux";
+import {
+  addToCart,
+  removeFromCart,
+  resetCart,
+} from "../../pages/redux/slices/cartSlice";
 
-function CartItem() {
-  const [cartNumber, setCartNumber] = useState(0);
+function CartItem({ cart }) {
+  const dispatch = useDispatch();
 
   return (
     <div className="CartItem">
       <div className="item-img">
-        <img src={dummyImg} alt="product img" />
+        <img src={cart.image} alt="product img" />
       </div>
 
       <div className="item-info-wrapper">
         <div className="item-info">
-          <p className="title">Product Title</p>
-          <p className="price">₹ 199</p>
+          <p className="title">{cart.title}</p>
+          <p className="price">₹ {cart.price}</p>
           <div className="quantity-selector center">
             <span
               className="btn decrement"
-              onClick={() => {
-                cartNumber > 0 && setCartNumber(cartNumber - 1);
-              }}
+              onClick={() => dispatch(removeFromCart(cart))}
             >
               -
             </span>
-            <span className="quantity">{cartNumber}</span>
+            <span className="quantity">{cart.quantity}</span>
             <span
               className="btn increment"
-              onClick={() => setCartNumber(cartNumber + 1)}
+              onClick={() => dispatch(addToCart(cart))}
             >
               +
             </span>
           </div>
-          <p className="total-price">Subtotal: ₹ 499</p>
+          <p className="total-price">
+            Subtotal: ₹ {cart.quantity * cart.price}
+          </p>
         </div>
 
         <div className="item-remove">
-          <IoClose />
+          <IoClose onClick={() => dispatch(resetCart(cart))} />
         </div>
       </div>
     </div>

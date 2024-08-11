@@ -16,16 +16,16 @@ function Collection() {
 
   const sortOptions = [
     {
-      key: "oldest-first",
-      sort: "createdAt",
-      order: "asc",
-      value: "Oldest First",
-    },
-    {
       key: "newest-first",
       sort: "createdAt",
       order: "desc",
       value: "Newest First",
+    },
+    {
+      key: "oldest-first",
+      sort: "createdAt",
+      order: "asc",
+      value: "Oldest First",
     },
     {
       key: "price-lth",
@@ -44,10 +44,12 @@ function Collection() {
   const [sortBy, setSortBy] = useState(sortOptions[0].sort);
   const [sortOrder, setSortOrder] = useState(sortOptions[0].order);
 
+  const url = params.categoryId
+    ? `/products?populate=image&filters[category][key][$eq]=${params.categoryId}&sort=${sortBy}:${sortOrder}`
+    : `/products?populate=image&sort=${sortBy}:${sortOrder}`;
+
   async function fetchproducts() {
-    const response = await axiosClient.get(
-      `/products?populate=image&filters[category][key][$eq]=${params.categoryId}&sort=${sortBy}:${sortOrder}`
-    );
+    const response = await axiosClient.get(url);
     setProducts(response.data.data);
   }
 
