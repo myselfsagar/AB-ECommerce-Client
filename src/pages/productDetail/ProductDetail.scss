@@ -3,6 +3,8 @@
 
   .product-layout {
     display: flex;
+    align-items: flex-start;
+    gap: 10px;
 
     .product-img {
       // max-width: 600px;
@@ -113,7 +115,7 @@
     .product-layout {
       .product-info {
         .title {
-          font-size: 1.5rem;
+          font-size: 1.2rem;
         }
         .price {
           font-size: 1rem;
