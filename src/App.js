@@ -6,7 +6,7 @@ import ProductDetail from "./pages/productDetail/ProductDetail";
 import Footer from "./components/footer/Footer";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchCategories } from "./pages/redux/slices/categorySlice";
+import { fetchCategories } from "./redux/slices/categorySlice";
 
 function App() {
   const dispatch = useDispatch();

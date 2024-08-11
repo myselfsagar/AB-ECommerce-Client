@@ -7,7 +7,7 @@ import {
   addToCart,
   removeFromCart,
   resetCart,
-} from "../../pages/redux/slices/cartSlice";
+} from "../../redux/slices/cartSlice";
 
 function CartItem({ cart }) {
   const dispatch = useDispatch();

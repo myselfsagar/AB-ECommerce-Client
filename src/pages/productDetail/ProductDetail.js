@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import dummyImg from "../../assets/naruto.jpeg";
 import "./ProductDetail.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { axiosClient } from "../../utils/axiosClient";
 import Loader from "../../components/loader/Loader";
-import { addToCart, removeFromCart } from "../redux/slices/cartSlice";
+import { addToCart, removeFromCart } from "../../redux/slices/cartSlice";
 
 function ProductDetail() {
   const params = useParams();
