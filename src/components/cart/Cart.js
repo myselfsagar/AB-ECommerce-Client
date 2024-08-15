@@ -4,12 +4,28 @@ import { BsCartX } from "react-icons/bs";
 import "./Cart.scss";
 import CartItem from "../cartItem/CartItem";
 import { useSelector } from "react-redux";
+import { axiosClient } from "../../utils/axiosClient";
+
+//Stripe
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 function Cart({ onClose }) {
   const cart = useSelector((state) => state.cartReducer.cart);
   let totalAmount = 0;
   cart.forEach((item) => (totalAmount += item.quantity * item.price));
   const isCartEmpty = cart.length === 0;
+
+  async function handleCheckout() {
+    const response = await axiosClient.post("/orders", {
+      products: cart,
+    });
+
+    const stripe = await stripePromise;
+    await stripe.redirectToCheckout({
+      sessionId: response.data.stripeId,
+    });
+  }
 
   return (
     <div className="Cart">
@@ -43,7 +59,10 @@ function Cart({ onClose }) {
               <h4 className="total-value">₹ {totalAmount}</h4>
             </div>
 
-            <div className="proceed-to-checkout btn-primary">
+            <div
+              className="proceed-to-checkout btn-primary"
+              onClick={handleCheckout}
+            >
               Proceed To Checkout
             </div>
           </div>

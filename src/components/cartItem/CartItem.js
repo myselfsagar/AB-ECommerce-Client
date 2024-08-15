@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import {
   addToCart,
   removeFromCart,
+  deleteFromCart,
   resetCart,
 } from "../../redux/slices/cartSlice";
 
@@ -43,7 +44,7 @@ function CartItem({ cart }) {
         </div>
 
         <div className="item-remove">
-          <IoClose onClick={() => dispatch(resetCart(cart))} />
+          <IoClose onClick={() => dispatch(deleteFromCart(cart))} />
         </div>
       </div>
     </div>
